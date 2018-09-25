@@ -1,0 +1,7 @@
+<!-- link to sign in with google -->
+{{#if user}}
+    <h1>Welcome Back {{user.firstName}} {{user.lastName}}</h1>
+    <a href="/auth/logout">LOG OUT</a>
+{{else }}
+  <a href="/auth/google" class="waves-effect waves-light btn-large"><i class="fab fa-google-plus-g"></i> Sign In with Google</a>
+{{/if}}

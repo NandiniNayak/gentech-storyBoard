@@ -1,0 +1,38 @@
+<h1>Add Story</h1>
+<div class="row">
+  <form class="col s12" action="/stories" method="post">
+    <div class="row">
+      <div class="input-field">
+        <input type="text" name="title" value="">
+        <label for="title">Title</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field">
+        <!-- instead of input a dropdown -->
+        <select name="status">
+          <option value="public" selected >Public</option>
+          <option value="private">Private</option>
+        </select>
+        <label for="status">Status</label>
+      </div>
+    </div>
+    <div class="row">
+      <!-- checkbox to allow comments -->
+      <p>
+       <label>
+         <input type="checkbox" class="filled-in" id="filled-in-box" checked="checked" name="allowComments" />
+         <span>Allow Comments</span>
+       </label>
+     </p>
+    </div>
+
+    <div class="row">
+      <div class="input-field">
+        <h5>Tell us your Story:</h5>
+        <textarea name="body"></textarea>
+      </div>
+    </div>
+    <input type="submit" class="btn" value="save">
+  </form>
+</div>
