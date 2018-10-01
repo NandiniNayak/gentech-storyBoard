@@ -6,11 +6,12 @@ const app = express();
 const session = require("express-session");
 const keys = require("./config/keys");
 const bodyParser = require("body-parser");
+const methodOverride = require("method-override");
 // path for css
 const path = require("path");
 const PORT = 3000;
 //require helper methods
-const { truncate, stripTags, formatDate } = require("./helper/hbs");
+const { truncate, stripTags, formatDate, select } = require("./helper/hbs");
 
 // Set Static folder
 app.use(express.static(path.join(__dirname, "public")));
@@ -34,6 +35,8 @@ mongoose
 require("./config/passport")(passport);
 // load routes
 const auth = require("./routes/auth");
+// Method Override middleware
+app.use(methodOverride("_method"));
 // express handlebars middleware
 app.engine(
   "handlebars",
@@ -42,7 +45,8 @@ app.engine(
     helpers: {
       truncate: truncate,
       stripTags: stripTags,
-      formatDate: formatDate
+      formatDate: formatDate,
+      select: select
     },
     defaultLayout: "main"
   })

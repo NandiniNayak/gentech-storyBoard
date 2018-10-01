@@ -41,6 +41,47 @@ router.get("/show/:id", (req, res) => {
     });
 });
 
+// edit story form
+router.get("/edit/:id", (req, res) => {
+  console.log("edit story");
+  Story.findOne({
+    _id: req.params.id
+  }).then(story => {
+    // if the story doesnot belong to user disable edit
+    if (story.user != req.user.id) {
+      res.redirect("/stories");
+    } else {
+      // res.send('STORIES');
+      res.render("stories/edit", {
+        story: story
+      });
+    }
+  });
+});
+
+// edit story put
+// EDIT form process
+router.put("/:id", (req, res) => {
+  Story.findOne({
+    _id: req.params.id
+  }).then(story => {
+    let allowComments;
+
+    if (req.body.allowComments) {
+      allowComments = true;
+    } else {
+      allowComments = false;
+    }
+    //New values
+    story.title = req.body.title;
+    story.body = req.body.body;
+    story.status = req.body.status;
+    story.allowComments = allowComments;
+    story.save().then(story => {
+      res.redirect("/dashboard");
+    });
+  });
+});
 router.post("/", (req, res) => {
   console.log(req.body);
   // fetch the data save to the story database and redirect to stories/index
