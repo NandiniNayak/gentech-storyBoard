@@ -19,6 +19,7 @@ module.exports = passport => {
         console.log("refreshToken", refreshToken);
         console.log(("profile", profile));
         // save profile info coming from google to database
+        console.log(profile.photos[0].value);
         const image = profile.photos[0].value.substring(
           0,
           profile.photos[0].value.indexOf("?")

@@ -2,8 +2,12 @@
   <div class="nav-wrapper">
     <a href="/" class="brand-logo">Logo</a>
     <ul id="nav-mobile" class="right hide-on-med-and-down">
+      {{#if user}}
+        <li><a href="/auth/logout">LOG OUT</a></li>
+        <li><a href="/dashboard">Welcome {{user.firstName}} {{user.lastName}}</a></li>
+      {{/if}}
       <li><a href="/stories"><i class="fas fa-book"></i>
-Public Stories</a></li>
+          Public Stories</a></li>
     </ul>
   </div>
 </nav>

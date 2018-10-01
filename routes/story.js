@@ -23,6 +23,24 @@ router.get("/", (req, res) => {
     });
 });
 
+// route for the show page
+router.get("/show/:id", (req, res) => {
+  // find the story from the database that matched the id
+  Story.findOne({
+    _id: req.params.id
+  })
+    // bring in user info from collection to access image, firstname and lastName
+    .populate("user")
+    .then(story => {
+      console.log(story);
+      res
+        .render("stories/show", {
+          story: story
+        })
+        .catch(err => console.log(err));
+    });
+});
+
 router.post("/", (req, res) => {
   console.log(req.body);
   // fetch the data save to the story database and redirect to stories/index

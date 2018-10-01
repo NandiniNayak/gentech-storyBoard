@@ -9,7 +9,7 @@
           <h5>{{title}}</h5>
           <!-- truncate function created in helpers, dont use parenthesis and , -->
           <!-- to use more than one function need parenthesis -->
-          <p class="story-text">{{body}}</p>
+          <p class="story-text">{{stripTags (truncate body 100)}}</p>
           <br>
           <div class="chip">
             <img src="{{user.image}}" >

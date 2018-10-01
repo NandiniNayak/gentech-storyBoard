@@ -8,8 +8,9 @@ const keys = require("./config/keys");
 const bodyParser = require("body-parser");
 // path for css
 const path = require("path");
-
 const PORT = 3000;
+//require helper methods
+const { truncate, stripTags, formatDate } = require("./helper/hbs");
 
 // Set Static folder
 app.use(express.static(path.join(__dirname, "public")));
@@ -34,7 +35,18 @@ require("./config/passport")(passport);
 // load routes
 const auth = require("./routes/auth");
 // express handlebars middleware
-app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.engine(
+  "handlebars",
+  exphbs({
+    // include the handlbar helpers in the middleware
+    helpers: {
+      truncate: truncate,
+      stripTags: stripTags,
+      formatDate: formatDate
+    },
+    defaultLayout: "main"
+  })
+);
 app.set("view engine", "handlebars");
 
 // middleware for body bodyParser
