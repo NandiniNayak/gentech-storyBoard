@@ -31,6 +31,7 @@ router.get("/show/:id", (req, res) => {
   })
     // bring in user info from collection to access image, firstname and lastName
     .populate("user")
+    .populate("comments.commentUser")
     .then(story => {
       console.log(story);
       res
@@ -101,6 +102,36 @@ router.post("/", (req, res) => {
   new Story(newStory)
     .save()
     .then(story => res.redirect("/stories"))
+    .catch(err => console.log(err));
+});
+// post route for comments
+router.post("/comment/:id", (req, res) => {
+  // find a particular story by id
+  Story.findOne({
+    _id: req.params.id
+  })
+    .then(story => {
+      // check if the comment was from same user who posted the story
+      console.log(`story user id is ${story.user.id}`);
+      console.log(`logged in user id is ${req.user.id}`);
+      if (story.user.id === req.user.id) {
+        // redirect back to stories show page without adding comment to db
+        res.redirect(`/stories/show/${story.id}`);
+      } else {
+        // create a newComment object and save to db
+        const newComment = {
+          commentBody: req.body.commentBody,
+          commentUser: req.user.id
+        };
+        // add newComment to the story.comment array
+        // unshift the comment to get the latest comment first
+        story.comments.unshift(newComment);
+        // save the story comment to db
+        story.save().then(story => {
+          res.redirect(`/stories/show/${story.id}`);
+        });
+      }
+    })
     .catch(err => console.log(err));
 });
 

@@ -30,7 +30,24 @@ const StorySchema = new Schema({
   storyDate: {
     type: Date,
     default: Date.now
-  }
+  },
+  // add comments to the stories model and link to the user
+  comments: [
+    {
+      commentBody: {
+        type: String,
+        required: true
+      },
+      commentDate: {
+        type: Date,
+        default: Date.now
+      },
+      commentUser: {
+        type: Schema.Types.ObjectId,
+        ref: "users"
+      }
+    }
+  ]
 });
 
 mongoose.model("stories", StorySchema);
